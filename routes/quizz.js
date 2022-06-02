@@ -23,11 +23,11 @@ class Quizz {
     }
 }
 
-var quizz1 = new Quizz(1, ["oui", "non"], "Êtes-vous un homme ?", "oui");
-var quizz2 = new Quizz(2, ["Jaune", "Rouge"], "Quelle est votre couleur préférée ?", "Jaune");
-var quizz3 = new Quizz(3, ["ING3", "ING2"], "Quelle est votre classe ?", "ING3");
-
-quizz_all = [quizz1, quizz2, quizz3]
+quizz_all = [
+    new Quizz(1, ["oui", "non"], "Êtes-vous un homme ?", "oui"),
+    new Quizz(2, ["Jaune", "Rouge"], "Quelle est votre couleur préférée ?", "Jaune"),
+    new Quizz(3, ["ING3", "ING2"], "Quelle est votre classe ?", "ING3")
+]
 
 router.get("/", (req, res) => {
     res.status(200).json(quizz_all);
