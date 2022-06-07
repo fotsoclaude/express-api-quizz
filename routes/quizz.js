@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
 router.get("/play/:questionId", (req, res, next) => {
     const { questionId } = req.params;
     var found = false;
-
+    
     for (const quizz of quizz_all) {
         if (quizz.id == questionId) {
             found = true
@@ -89,8 +89,7 @@ router.use((err, req, res, next) => {
 
 // Gestion de toutes les autres erreurs
 router.use((err, req, res, next) => {
-    res.status(500);
-    res.send("Internal server error");
+    res.status(500).send("Internal server error");
 });
 
 module.exports = router;
