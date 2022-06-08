@@ -48,7 +48,7 @@ router.get("/play/:questionId", (req, res, next) => {
     }
 });
 
-router.get("/rest/:questionId/:reponse", (req, res, next) => {
+router.get("/res/:questionId/:reponse", (req, res, next) => {
     const { questionId, reponse } = req.params;
     var found = false;
 
