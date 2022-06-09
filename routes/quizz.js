@@ -46,24 +46,30 @@ router.get("/play/:id", (req, res, next) => {
     res.status(200).json(quizz);
 });
 
-router.get("/res/:questionId/:reponse", (req, res, next) => {
-    const { questionId, reponse } = req.params;
-    var found = false;
-
-    for (const quizz of quizz_all) {
-        if (quizz.id == questionId) {
-            found = true
-            if (quizz.result == reponse) {
-                res.status(200).send("Bonne réponse")
-            }
-            else {
-                next(new WrongResponse("Mauvaise réponse."))
-            }
-            break
-        }
-    }
-    if (!found) {
+router.get("/res/:id", (req, res, next) => {
+    const { id } = req.params;
+    const quizz = quizz_all.find((it) => it.id == id);
+    
+    if (!quizz) {
         next(new NoCorrespondantQuizz("Aucun quizz correspondant !"))
+    }
+
+    res.status(200).json(quizz.result);
+});
+
+router.get("/correction/:id/:reponse", (req, res, next) => {
+    const { id, reponse } = req.params;
+    const quizz = quizz_all.find((it) => it.id == id);
+
+    if (!quizz) {
+        next(new NoCorrespondantQuizz("Aucun quizz correspondant !"))
+    }
+
+    if (quizz.result == reponse) {
+        res.status(200).send("Bonne réponse")
+    }
+    else {
+        next(new WrongResponse("Mauvaise réponse."))
     }
 });
 
