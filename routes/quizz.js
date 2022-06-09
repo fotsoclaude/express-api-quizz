@@ -30,7 +30,14 @@ quizz_all = [
 ]
 
 router.get("/", (req, res) => {
-    res.status(200).json(quizz_all);
+    const result = [];
+    quizz_all.forEach((quizz) => {
+        result.push({
+        ...quizz,
+        result: undefined,
+        });
+    });
+    res.status(200).json(result);
 });
 
 router.get("/play/:questionId", (req, res, next) => {
