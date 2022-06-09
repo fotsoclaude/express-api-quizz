@@ -29,14 +29,14 @@ quizz_all = [
     new Quizz(3, ["ING3", "ING2"], "Quelle est votre classe ?", "ING3")
 ]
 
+const noResult = hideResult();
+
 router.get("/", (req, res) => {
-    const noResult = hideResult();
     res.status(200).json(noResult);
 });
 
 router.get("/play/:id", (req, res, next) => {
     const { id } = req.params;
-    const noResult = hideResult();
     const quizz = noResult.find((it) => it.id == id);
     
     if (!quizz) {
