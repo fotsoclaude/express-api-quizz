@@ -30,29 +30,20 @@ quizz_all = [
 ]
 
 router.get("/", (req, res) => {
-    const result = [];
-    quizz_all.forEach((quizz) => {
-        result.push({
-        ...quizz,
-        result: undefined,
-        });
-    });
-    res.status(200).json(result);
+    const noResult = hideResult();
+    res.status(200).json(noResult);
 });
 
-router.get("/play/:questionId", (req, res, next) => {
-    const { questionId } = req.params;
-    var found = false;
+router.get("/play/:id", (req, res, next) => {
+    const { id } = req.params;
+    const noResult = hideResult();
+    const quizz = noResult.find((it) => it.id == id);
     
-    for (const quizz of quizz_all) {
-        if (quizz.id == questionId) {
-            found = true
-            res.status(200).json(quizz)
-        }
-    }
-    if (!found) {
+    if (!quizz) {
         next(new NoCorrespondantQuizz("Aucun quizz correspondant !"))
     }
+
+    res.status(200).json(quizz);
 });
 
 router.get("/res/:questionId/:reponse", (req, res, next) => {
@@ -98,5 +89,17 @@ router.use((err, req, res, next) => {
 router.use((err, req, res, next) => {
     res.status(500).send("Internal server error");
 });
+
+
+function hideResult() {
+    const result = [];
+    quizz_all.forEach((quizz) => {
+        result.push({
+        ...quizz,
+        result: undefined,
+        });
+    });
+    return result;
+}
 
 module.exports = router;
